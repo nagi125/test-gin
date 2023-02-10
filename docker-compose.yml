@@ -8,19 +8,17 @@ services:
     ports:
       - 80:80
     volumes:
-      - .:/app
+      - ./src/:/app
     depends_on:
       - app
 
   app:
     container_name: app-test-gin
     build:
-      context: .docker/go
-      dockerfile: Dockerfile
-    environment:
-      PORT: '8080'
+      context: ./
+      dockerfile: .docker/go/Dockerfile
     volumes:
-      - ./src/:/go/src/app
+      - ./src/:/go/src
     ports:
       - 8080:8080
     tty: true
