@@ -1,7 +1,7 @@
 version: '3'
 services:
-  app-go:
-    container_name: app-go
+  app:
+    container_name: app-test-gin
     build:
       context: .docker/go
       dockerfile: Dockerfile
@@ -12,3 +12,23 @@ services:
     ports:
       - 8080:8080
     tty: true
+
+  db:
+    image: mysql:8.0
+    container_name: db-test-gin
+    environment:
+      TZ: 'Asia/Tokyo'
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gin_development
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - database:/var/lib/mysql
+      - ./.docker/db/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./.docker/db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+
+volumes:
+  database:
