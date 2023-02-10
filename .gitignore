@@ -23,4 +23,5 @@
 # Go workspace file
 go.work
 
-
+# Air
+src/tmp/*
